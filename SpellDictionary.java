@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Arrays;
 
 public class SpellDictionary implements SpellingOperations {
 
@@ -38,7 +39,7 @@ public class SpellDictionary implements SpellingOperations {
      * @return a list of all valid words that are one edit away from the query
      */
     public ArrayList<String> nearMisses(String query) {
-        ArrayList<String> newWords = new ArrayList<>();
+        ArrayList<String> misses = new ArrayList<>();
 
         ArrayList<String> queryList = new ArrayList<>();
         for (int i = 0; i < query.length(); i++) {
@@ -46,36 +47,45 @@ public class SpellDictionary implements SpellingOperations {
         }
 
         // Deletion
-        for (int i = 0; i < query.length(); i++) {
-            String deletedFirst = query.substring(i, query.length());
-            String deletedSecond = query.substring(i, i+1) + query.substring(i+2); 
-            System.out.println(deletedFirst + " " + deletedSecond);
-            if (dictionary.contains(deletedFirst)) {
-                newWords.add(deletedFirst);
-                System.out.println(newWords);
-            }
-            if(dictionary.contains(deletedSecond)) {
-                newWords.add(deletedSecond); 
-            }
-        }
+        // for(int i = 0; i < query.length(); i++) {
+        // String newWord = query.substring(i);
+        // System.out.println(newWord);
+        // if(dictionary.contains(newWord) && !misses.contains(newWord)) {
+        // misses.add(newWord);
+        // System.out.println(misses);
+        // }
+        // }
 
-        for(int i = 0; i < query.length() - 1; i++) {
-            for(int j = i + 1; j < query.length(); j++) {
-                
-
-            }
-        }
-
-        // Insertions
-        for (char ch = 'A'; ch <= 'Z'; ch++) {
-            for (int i = 0; i < query.length() - 1; i++) {
-                String newWord = query.substring(i, i + 1) + String.valueOf(ch) + query.substring(i + 3);
-            }
-        }
+        // // Insertions
+        // for (char ch = 'A'; ch <= 'Z'; ch++) {
+        // for (int i = 0; i < query.length() - 1; i++) {
+        // String newWord = query.substring(i, i + 1) + String.valueOf(ch) +
+        // query.substring(i + 3);
+        // }
+        // }
 
         // substitutiions
-        for (int i = 0; i < 25 * query.length(); i++) {
+        char queryArr[] = query.toCharArray();
+        // System.out.println(querArr[1]);
+        // char queryArr[] = new char[query.length()];
+        // for(int i = 0; i < query.length(); i++) {
+        // queryArr[i] = query.charAt(query.indexOf(query.substring(i, i+1)));
+        // }
+        // System.out.println(queryArr[0]);
 
+        for (int i = 0; i < query.length(); i++) {
+            queryArr = query.toCharArray();
+            for (char c = 'A'; c <= 'Z'; c++) {
+                if (i == 0) {
+                    queryArr[i] = c;
+                } else {
+                    queryArr[i] = Character.toLowerCase(c);
+                }
+                String newWord = Arrays.toString(queryArr);
+                if (dictionary.contains(newWord) && !misses.contains(newWord)) {
+                    misses.add(newWord);
+                }
+            }
         }
 
         // transposition
@@ -88,7 +98,8 @@ public class SpellDictionary implements SpellingOperations {
 
         }
 
-        return newWords;
+
+        return misses; 
 
     }
 
@@ -97,7 +108,7 @@ public class SpellDictionary implements SpellingOperations {
         // System.out.println(ch);
         // }
         SpellDictionary d = new SpellDictionary("words.txt");
-        d.nearMisses("hello");
+        d.nearMisses("cattle");
 
     }
 
