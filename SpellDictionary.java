@@ -42,68 +42,68 @@ public class SpellDictionary implements SpellingOperations {
     public ArrayList<String> nearMisses(String query) {
         ArrayList<String> misses = new ArrayList<>();
 
-        // // // Deletion
-        // for (int i = 0; i < query.length(); i++) {
-        // String newWord = query.substring(i);
-        // System.out.println(newWord);
-        // if (dictionary.contains(newWord) && !misses.contains(newWord)) {
-        // misses.add(newWord);
-        // System.out.println(misses);
-        // }
-        // }
+        // Deletion
+        for (int i = 0; i < query.length(); i++) {
+            String newWord = query.substring(i);
+            // System.out.println(newWord);
+            if (dictionary.contains(newWord) && !misses.contains(newWord)) {
+                misses.add(newWord);
+                // System.out.println(misses);
+            }
+        }
 
-        // // Insertion
-        // // make arraylist
-        // ArrayList<String> queryList = new ArrayList<>();
-        // for (int i = 0; i < query.length(); i++) {
-        // queryList.add(query.substring(i, i + 1));
-        // }
+        // Insertion
+        // make arraylist
+        ArrayList<String> queryList = new ArrayList<>();
+        for (int i = 0; i < query.length(); i++) {
+            queryList.add(query.substring(i, i + 1));
+        }
 
-        // for (int i = 0; i < query.length() + 1; i++) {
-        // for (char c = 'a'; c <= 'z'; c++) {
+        for (int i = 0; i < query.length() + 1; i++) {
+            for (char c = 'a'; c <= 'z'; c++) {
 
-        // queryList.add(i, String.valueOf(c));
+                queryList.add(i, String.valueOf(c));
 
-        // StringBuilder word = new StringBuilder();
-        // for (String l : queryList) {
-        // word.append(l);
-        // }
-        // String insertedWord = word.toString();
-        // System.out.println(insertedWord);
+                StringBuilder word = new StringBuilder();
+                for (String l : queryList) {
+                    word.append(l);
+                }
+                String insertedWord = word.toString();
+                // System.out.println(insertedWord);
 
-        // if (dictionary.contains(insertedWord) && !misses.contains(insertedWord)) {
-        // System.out.println("in");
-        // misses.add(insertedWord);
-        // }
-        // // reverts list back to normal (without added letter)
-        // queryList.remove(i);
-        // }
-        // }
+                if (dictionary.contains(insertedWord) && !misses.contains(insertedWord)) {
+                    // System.out.println("in");
+                    misses.add(insertedWord);
+                }
+                // reverts list back to normal (without added letter)
+                queryList.remove(i);
+            }
+        }
 
-        // // substitutiions
-        // char queryArr[] = query.toCharArray();
-        // for (int i = 0; i < query.length(); i++) {
-        // queryArr = query.toCharArray();
-        // for (char c = 'A'; c <= 'Z'; c++) {
+        // substitutiions
+        char queryArr[] = query.toCharArray();
+        for (int i = 0; i < query.length(); i++) {
+            queryArr = query.toCharArray();
+            for (char c = 'A'; c <= 'Z'; c++) {
 
-        // queryArr[i] = Character.toLowerCase(c);
+                queryArr[i] = Character.toLowerCase(c);
 
-        // StringBuilder word = new StringBuilder();
-        // for (char l : queryArr) {
-        // word.append(l);
-        // }
+                StringBuilder word = new StringBuilder();
+                for (char l : queryArr) {
+                    word.append(l);
+                }
 
-        // String newWord = word.toString();
-        // if (dictionary.contains(newWord) && !misses.contains(newWord)) {
-        // //System.out.println("added");
-        // misses.add(newWord);
-        // System.out.println(misses);
-        // }
-        // }
-        // }
+                String newWord = word.toString();
+                if (dictionary.contains(newWord) && !misses.contains(newWord)) {
+                    // System.out.println("added");
+                    misses.add(newWord);
+                    // System.out.println(misses);
+                }
+            }
+        }
 
         // transposition
-        char queryArr[] = query.toCharArray();
+        queryArr = query.toCharArray();
         char firstL;
         char secondL;
         for (int i = 0; i < query.length() - 1; i++) {
@@ -112,7 +112,7 @@ public class SpellDictionary implements SpellingOperations {
             queryArr[i] = secondL;
             queryArr[i + 1] = firstL;
 
-            System.out.println(queryArr);
+            // System.out.println(queryArr);
 
             StringBuilder wordBuilder = new StringBuilder();
 
@@ -121,7 +121,7 @@ public class SpellDictionary implements SpellingOperations {
             }
 
             String word = wordBuilder.toString();
-            System.out.println(word);
+            // System.out.println(word);
             if (dictionary.contains(word) && !misses.contains(word)) {
                 misses.add(word);
             }
@@ -129,22 +129,39 @@ public class SpellDictionary implements SpellingOperations {
             queryArr[i + 1] = secondL;
         }
 
-        // Splits
+        // // Splits
         for (int i = 0; i < query.length() - 1; i++) {
+            String word1 = query.substring(0, i);
+            String word2 = query.substring(i);
 
+            if (dictionary.contains(word1) && dictionary.contains(word2)) {
+                if (!(misses.contains(word1) || misses.contains(word2))) {
+                    misses.add(word1);
+                    misses.add(word2);
+                }
+            }
         }
 
         return misses;
 
     }
 
+    // testing
     public static void main(String[] args) {
-        // for (char ch = 'A'; ch <= 'Z'; ch++) {
-        // System.out.println(ch);
-        // }
-        SpellDictionary d = new SpellDictionary("words.txt");
-        d.nearMisses("cattel");
 
+        SpellDictionary d = new SpellDictionary("words.txt");
+
+        System.out.println(d.nearMisses("cattell"));
+
+        System.out.println("Testing Deletion");
+
+        System.out.println("Testing Insertion");
+
+        System.out.println("Testing Substitution");
+
+        System.out.println("Testing Transposition");
+
+        System.out.println("Testing Split");
     }
 
 }
