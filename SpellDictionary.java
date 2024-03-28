@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Arrays;
+import java.util.*;
 
 public class SpellDictionary implements SpellingOperations {
 
@@ -47,14 +48,14 @@ public class SpellDictionary implements SpellingOperations {
         }
 
         // Deletion
-        // for(int i = 0; i < query.length(); i++) {
-        // String newWord = query.substring(i);
-        // System.out.println(newWord);
-        // if(dictionary.contains(newWord) && !misses.contains(newWord)) {
-        // misses.add(newWord);
-        // System.out.println(misses);
-        // }
-        // }
+        for (int i = 0; i < query.length(); i++) {
+            String newWord = query.substring(i);
+            System.out.println(newWord);
+            if (dictionary.contains(newWord) && !misses.contains(newWord)) {
+                misses.add(newWord);
+                System.out.println(misses);
+            }
+        }
 
         // // Insertions
         // for (char ch = 'A'; ch <= 'Z'; ch++) {
@@ -66,24 +67,27 @@ public class SpellDictionary implements SpellingOperations {
 
         // substitutiions
         char queryArr[] = query.toCharArray();
-        // System.out.println(querArr[1]);
-        // char queryArr[] = new char[query.length()];
-        // for(int i = 0; i < query.length(); i++) {
-        // queryArr[i] = query.charAt(query.indexOf(query.substring(i, i+1)));
-        // }
-        // System.out.println(queryArr[0]);
-
         for (int i = 0; i < query.length(); i++) {
             queryArr = query.toCharArray();
             for (char c = 'A'; c <= 'Z'; c++) {
                 if (i == 0) {
                     queryArr[i] = c;
+
                 } else {
                     queryArr[i] = Character.toLowerCase(c);
+
                 }
-                String newWord = Arrays.toString(queryArr);
+
+                StringBuilder word = new StringBuilder();
+                for (char l : queryArr) {
+                    word.append(l);
+                }
+
+                String newWord = word.toString();
                 if (dictionary.contains(newWord) && !misses.contains(newWord)) {
+                    System.out.println("added");
                     misses.add(newWord);
+                    System.out.println(misses);
                 }
             }
         }
@@ -98,8 +102,7 @@ public class SpellDictionary implements SpellingOperations {
 
         }
 
-
-        return misses; 
+        return misses;
 
     }
 
