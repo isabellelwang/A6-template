@@ -8,8 +8,7 @@ import java.util.Arrays;
 public class SpellDictionary implements SpellingOperations {
 
     HashSet<String> dictionary = new HashSet<>();
-    String alphabet = "abcdefghijklmnopqrstuvwxyz";
-
+    
     public SpellDictionary(String fileName) {
         try {
 
@@ -40,6 +39,7 @@ public class SpellDictionary implements SpellingOperations {
      */
     public ArrayList<String> nearMisses(String query) {
         query = query.toLowerCase(); 
+        System.out.println(query);
         ArrayList<String> misses = new ArrayList<>();
 
         // Deletion
@@ -141,7 +141,7 @@ public class SpellDictionary implements SpellingOperations {
             queryArr[i + 1] = secondL;
         }
 
-        // // Splits
+        // Splits
         for (int i = 0; i < query.length() - 1; i++) {
             String word1 = query.substring(0, i);
             String word2 = query.substring(i);
@@ -162,8 +162,9 @@ public class SpellDictionary implements SpellingOperations {
     public static void main(String[] args) {
 
         SpellDictionary d = new SpellDictionary("words.txt");
+        System.out.println(d.nearMisses("Shall"));
 
-        // System.out.println(d.nearMisses("cattell"));
+        // System.out.println(d.nearMisses("cattell")); 
 
 
     }
