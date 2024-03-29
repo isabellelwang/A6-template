@@ -4,7 +4,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Arrays;
-import java.util.*;
 
 public class SpellDictionary implements SpellingOperations {
 
@@ -40,21 +39,34 @@ public class SpellDictionary implements SpellingOperations {
      * @return a list of all valid words that are one edit away from the query
      */
     public ArrayList<String> nearMisses(String query) {
+        query = query.toLowerCase(); 
         ArrayList<String> misses = new ArrayList<>();
 
         // Deletion
+        ArrayList<String> queryList = new ArrayList<>();
         for (int i = 0; i < query.length(); i++) {
-            String newWord = query.substring(i);
-            // System.out.println(newWord);
-            if (dictionary.contains(newWord) && !misses.contains(newWord)) {
-                misses.add(newWord);
-                // System.out.println(misses);
+            queryList.add(query.substring(i, i + 1));
+        }
+        for (int i = 0; i < query.length(); i++) {
+            String removed = queryList.remove(i);
+
+            StringBuilder wordBuilder = new StringBuilder();
+            for (String l : queryList) {
+                wordBuilder.append(l);
             }
+
+            String word = wordBuilder.toString();
+
+            if (dictionary.contains(word) && !misses.contains(word)) {
+                misses.add(word);
+            }
+            // undo to repeat cycle
+            queryList.add(i, removed);
         }
 
         // Insertion
         // make arraylist
-        ArrayList<String> queryList = new ArrayList<>();
+        queryList.clear();
         for (int i = 0; i < query.length(); i++) {
             queryList.add(query.substring(i, i + 1));
         }
@@ -84,9 +96,9 @@ public class SpellDictionary implements SpellingOperations {
         char queryArr[] = query.toCharArray();
         for (int i = 0; i < query.length(); i++) {
             queryArr = query.toCharArray();
-            for (char c = 'A'; c <= 'Z'; c++) {
+            for (char c = 'a'; c <= 'z'; c++) {
 
-                queryArr[i] = Character.toLowerCase(c);
+                queryArr[i] = c;
 
                 StringBuilder word = new StringBuilder();
                 for (char l : queryArr) {
@@ -151,17 +163,9 @@ public class SpellDictionary implements SpellingOperations {
 
         SpellDictionary d = new SpellDictionary("words.txt");
 
-        System.out.println(d.nearMisses("cattell"));
+        // System.out.println(d.nearMisses("cattell"));
 
-        System.out.println("Testing Deletion");
 
-        System.out.println("Testing Insertion");
-
-        System.out.println("Testing Substitution");
-
-        System.out.println("Testing Transposition");
-
-        System.out.println("Testing Split");
     }
 
 }
