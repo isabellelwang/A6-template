@@ -53,7 +53,7 @@ ____yes_ 2 pt: Complies with style guidelines (missing items 1 pt each):
 
       ___yes__ Methods & variables all have clear and accurate names
 
-      ____yes_ Methods avoid confusing side effects
+      ____yes44_ Methods avoid confusing side effects
 
 __yes___ 1 pt: All required files included with submission (including completed checklist file)
 
