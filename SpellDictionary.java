@@ -3,7 +3,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Arrays;
 
 public class SpellDictionary implements SpellingOperations {
 
@@ -19,7 +18,7 @@ public class SpellDictionary implements SpellingOperations {
                 String data = reader.nextLine();
                 dictionary.add(data);
             }
-            //System.out.println(dictionary.size());
+            // System.out.println(dictionary.size());
             reader.close();
         } catch (FileNotFoundException e) {
             System.err.println("No file found");
@@ -125,8 +124,6 @@ public class SpellDictionary implements SpellingOperations {
             queryArr[i] = secondL;
             queryArr[i + 1] = firstL;
 
-            // System.out.println(queryArr);
-
             StringBuilder wordBuilder = new StringBuilder();
 
             for (char l : queryArr) {
@@ -134,7 +131,6 @@ public class SpellDictionary implements SpellingOperations {
             }
 
             String word = wordBuilder.toString();
-            // System.out.println(word);
             if (dictionary.contains(word) && !misses.contains(word)) {
                 misses.add(word);
             }
