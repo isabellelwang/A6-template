@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class SpellDictionary implements SpellingOperations {
 
     HashSet<String> dictionary = new HashSet<>();
-    
+
     public SpellDictionary(String fileName) {
         try {
 
@@ -19,6 +19,7 @@ public class SpellDictionary implements SpellingOperations {
                 String data = reader.nextLine();
                 dictionary.add(data);
             }
+            //System.out.println(dictionary.size());
             reader.close();
         } catch (FileNotFoundException e) {
             System.err.println("No file found");
@@ -38,8 +39,8 @@ public class SpellDictionary implements SpellingOperations {
      * @return a list of all valid words that are one edit away from the query
      */
     public ArrayList<String> nearMisses(String query) {
-        query = query.toLowerCase(); 
-        System.out.println(query);
+        query = query.toLowerCase();
+
         ArrayList<String> misses = new ArrayList<>();
 
         // Deletion
@@ -153,9 +154,7 @@ public class SpellDictionary implements SpellingOperations {
                 }
             }
         }
-
         return misses;
-
     }
 
     // testing
@@ -164,8 +163,7 @@ public class SpellDictionary implements SpellingOperations {
         SpellDictionary d = new SpellDictionary("words.txt");
         System.out.println(d.nearMisses("Shall"));
 
-        // System.out.println(d.nearMisses("cattell")); 
-
+        // System.out.println(d.nearMisses("cattell"));
 
     }
 
